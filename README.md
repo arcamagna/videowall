@@ -6,22 +6,53 @@
 videowall [options] [files..]
 ```
 ### Options
-	-n  Number of rows (2 - 16). Default 4 (16 tiles) or 3 (18 tiles) in portrait mode.  
-	-l  Landscape mode for each video (default).  
-	-L  As above but use landscape files only (disabled if -s specified).  
-	-p  Portrait mode.  
-	-P  As above but use portrait files only (disabled if -s specified).  
-	-o <number>  Offset to skip valid files e.g. -o4 use 5th file onwards.
-	-s  Skip integrity check (faster start up).  
-	-F  Target frame rate. Default 30 fps.  
-	-r  Find files recursively.  
-	-f <extension>  Filter filetype(s) e.g. "mp4 jpg".  
-	-t <centre|left>  Position titles (file name) centre or left. Default no titles.  
-	-T <centre|left>  As above but use title tag if it exists (otherwise use file name).  
-	-S  Shuffle file order.
-	-g <"colour thickness">  Grid or bezel colour and thickness e.g. "black 3" or "#000000 3". Default is no grid.  
-	-R <"output_file.mp4">  Specify a file name to record output.  
-	-d  demo  
+	-n
+	   Number of rows (2 - 16). Default 4 (16 tiles) or 3 (18 tiles) in portrait mode.  
+	
+	-l
+	   Landscape mode for each video (default).  
+	
+	-L
+	   As above but use landscape files only (disabled if -s specified).  
+	
+	-p
+	   Portrait mode.  
+	
+	-P
+	   As above but use portrait files only (disabled if -s specified).  
+	
+	-o <number>
+	   Offset to skip valid files e.g. -o4 use 5th file onwards.
+	
+	-s
+	   Skip integrity check (faster start up).  
+	
+	-F
+	   Target frame rate. Default 30 fps.  
+	
+	-r
+	   Find files recursively.  
+	
+	-f <extension>
+	   Filter filetype(s) e.g. "mp4 jpg".  
+	
+	-t <centre|left>
+	   Position titles (file name) centre or left. Default no titles.  
+	
+	-T <centre|left>
+	   As above but use title tag if it exists (otherwise use file name).  
+	
+	-S
+	   Shuffle file order.
+	
+	-g <"colour thickness">
+	   Grid or bezel colour and thickness e.g. "black 3" or "#000000 3". Default is no grid.  
+	
+	-R <"output_file.mp4">
+	   Specify a file name to record output.  
+	
+	-d
+	   demo  
 
 ### Files
 Directory name or list of videos/images. If omitted current directory is used.
