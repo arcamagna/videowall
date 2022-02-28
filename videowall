@@ -125,7 +125,6 @@ if [[ -n $skipcheck ]]; then
 	[[ $checkportrait == force ]] && echo -P cannot filter files when -s specified
 fi
 
-# possible implementation: limit depth of recursion
 function recurse() {
 	for i in "$1"/*; do
 		[[ -d "$i" ]] && recurse "$i" || { [[ -f "$i" ]] && vids+=("$i"); }
@@ -144,12 +143,8 @@ bw=${wh[0]:-1920}; bh=${wh[1]:-1080}
 factor=${factor:-1}
 num=0
 
-if [[ $factor == 2 ]]; then
-	[[ $max == 16 ]] && max=15
-	maxsides=${max:-3}
-else
-	maxsides=${max:-4}
-fi
+[[ $factor == 2 ]] && { [[ $max == 16 ]] && max=15; maxsides=${max:-3}; } || maxsides=${max:-4}
+
 max=$(($maxsides*$maxsides*$factor))
 
 input=$default
