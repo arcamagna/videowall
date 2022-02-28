@@ -67,12 +67,12 @@ Press q to quit
 ```
 videowall
 ```
-Produces a 4x4 grid of videos and/or images. Sequence will be repeated if there aren't 16 unique valid files.
+Produces a 4x4 grid of videos and/or images from the current directory. Sequence will be repeated if there aren't 16 unique valid files.
 ```
 videowall -pSn2 -g"#054da5 4" -T centre
 ```
 Produces a 8x2 random grid of videos each having a 4 px blue frame and title tag bottom centre if one exists.
 ```
-videowall -rs -n6 -f "mp4 mkv" -o 50 -R "/tmp/6x6 video wall.mp4"
+videowall -rs -n6 -f "mp4 mkv" -o 50 -R "/tmp/6x6 video wall.mp4" ~
 ```
-Produces a 6x6 grid by recursively searching for mp4 and mkv files in the current directory. The first 50 files will be skipped. Files will not be checked for valid video streams. Record the output to "/tmp/6x6 video wall.mp4" instead of displaying on screen.
+Produces a 6x6 grid by recursively searching for mp4 and mkv files in user directory. The first 50 files will be skipped. Files will not be checked for valid video streams. Output will be recorded to "/tmp/6x6 video wall.mp4" instead of displaying on screen.
