@@ -2,14 +2,8 @@
 
 ## colours ##
 
-RED=$'\e[01;31m'
 GREEN=$'\e[01;32m'
-YELLOW=$'\e[01;33m'
-BLUE=$'\e[01;34m'
-PINK=$'\e[01;35m'
 CYAN=$'\e[01;36m'
-GREY=$'\e[01;37m'
-WHITE=$'\e[01;37m'
 RESET=$'\e[0m'
 
 
@@ -22,22 +16,24 @@ Works with both videos and images.$RESET
 ${CYAN}Usage:$RESET videowall [options] [files..]\n\
 \n\
 ${CYAN}Options:\n\
- $CYAN-n$RESET    Number of rows (max 16). Default 4 (16 tiles) or 3 in portrait mode (18 tiles).\n\
- $CYAN-m$RESET  <L|p|P> Display mode for each tile. Default mode is landscape.\n\
- 	L  Use landscape files only (disabled if -s specified).\n\
+ $CYAN-n$RESET  <int> Number of rows (max 16). Default 4 (16 tiles) or 3 in portrait mode (18 tiles).\n\
+ $CYAN-m$RESET  <int> Maximum number of files. This determines the sequence length before repeating.\n\
+ $CYAN-M$RESET  <L|p|P> Display mode for tiles. Landscape mode is used by default.\n\
+ 	L  Use landscape files only.\n\
  	p  Portrait mode.\n\
- 	P  Use portrait files only (disabled if -s specified).\n\
- $CYAN-o$RESET  <number> Offset number for skipping valid files e.g. -o4 use 5th valid file onwards.\n\
- $CYAN-s$RESET    Skip file check (faster start up).\n\
- $CYAN-F$RESET    Target frame rate. Default 30fps.\n\
+ 	P  Use portrait files only.\n\
+ $CYAN-s$RESET  <int> Skip number of valid files e.g. -s4 use 5th valid file onwards.\n\
+ $CYAN-c$RESET    File check (slower start up).\n\
+ $CYAN-F$RESET  <int> Target frame rate. Default 30fps.\n\
  $CYAN-r$RESET    Find files recursively.\n\
  $CYAN-f$RESET  <extension> Filter filetype(s) e.g. \"mp4 jpg\".\n\
- $CYAN-t$RESET  <centre|left> Position titles (file name) centre or left. Default no titles.\n\
- $CYAN-T$RESET  <centre|left> As above but use title tag if it exists.
+ $CYAN-t$RESET  <name|tag centre|left> Title type and position. Default no titles.\n\
+ $CYAN-d$RESET  <int> Duration in seconds.\n\
  $CYAN-S$RESET    Shuffle file order.
  $CYAN-g$RESET  <\"colour thickness\"> Grid or bezel colour and thickness e.g. \"black 3\". Default is no grid.\n\
- $CYAN-R$RESET  <output_file.mp4> Specify a file name to record output.\n\
- $CYAN-d$RESET    demo\n\
+ $CYAN-a$RESET  <input_file> File name or tile number for audio source.\n\
+ $CYAN-o$RESET  <output_file.mp4> Specify a file name to record output.\n\
+ $CYAN-D$RESET    demo\n\
 \n\
 ${CYAN}Files:$RESET\n\
 \n\
@@ -45,8 +41,8 @@ Directory name or list of videos/images. If omitted current directory is used.\n
 \n\
 ${CYAN}Operation:$RESET\n\
 \n\
-If there aren't enough files available they will be repeated to fill the given area.\n\
-Performance can be very slow for larger values of n especially when checking file validity.\n\
+If there aren't enough files available or -M restricts the number of files then they will be repeated to fill the given area.\n\
+Performance can be very slow for larger values of n especially when mode is L or P or tag is used for title.\n\
 \n\
 Press q to quit\n\
 \n\
@@ -54,15 +50,15 @@ ${CYAN}Examples:$RESET\n\
 \n\
 videowall\n\
 \n\
-Produces a 4x4 grid of videos and/or images from the current directory. Sequence will be repeated if there aren't 16 unique valid files.\n\
+4x4 grid of videos and/or images from the current directory. Sequence will be repeated if there aren't 16 unique valid files.\n\
 \n\
-videowall -mp -Sn2 -g\"#054da5 4\" -T centre\n\
+videowall -Mp -Sn2 -g\"#054da5 4\" -t \"tag centre\"\n\
 \n\
-Produces an 8x2 random grid of videos each having a 4 px blue frame and title tag bottom centre if one exists.\n\
+8x2 random grid of videos each having a 4 px blue frame and title tag bottom centre if one exists.\n\
 \n\
-videowall -rs -n6 -f \"mp4 mkv\" -o 50 -R \"/tmp/6x6 video wall.mp4\" ~\n\
+videowall -rs -n6 -f \"mp4 mkv\" -s 50 -o \"/tmp/6x6 video wall.mp4\" ~\n\
 \n\
-Produces a 6x6 grid by recursively searching for mp4 and mkv files in user directory. The first 50 files will be skipped. Files will not be checked for valid video streams. Output will be recorded to \"/tmp/6x6 video wall.mp4\" instead of displaying on screen.\n\
+6x6 grid by recursively searching for mp4 and mkv files in user directory. The first 50 files will be skipped. Files will not be checked for valid video streams. Output will be recorded to \"/tmp/6x6 video wall.mp4\" instead of displaying on screen.\n\
 \n"
 
 
@@ -74,31 +70,31 @@ word='^[a-z]|#([A-Fa-f0-9]{6})+$'
 
 ## config file ##
 
-config="H4sICLvFJ2ICAy52aWRlb3dhbGwATVNNb9swDL37VxDxIQmQ2Sva9VDApxXdZRiKpehdkalYjSxp
-EpUs/36k3SS7xCHFj8f3yBp+lXGHCYKBFE4ZVnAHX+DuEdZVLY7uoapqeLY5OnWGMfT4BBFWMSRK
-ytJ6A683C4x1mCF4d15DSPATVk75PmsV8f+3Bp7RqOIIbIMNnAb00Nusdg57sBmuSU1VS8suCogf
-yfaggwslAQfAyfY0gPUQ7V90uar3HNAtdq4g3D8uJOXd9hhAoPOIq35u+gRjPDKGbYkCHAwjZc8G
-jk63mn82YIzkVPWc2bU769tPH1e9UTbPRAHywcaqDsZkpO6rBG0pxKmz9XtQhjiB7IihEKwy6sAT
-MobvYRzRE4ibBgRnPUq9iW3rGbH1ltCdmYnP9O6blH9TaY+MPakRISlCWClNRbnZ6DEid2C6Qcey
-gX0sgKRZVBNzdz8h/I2ZktWzakDniMzh9OkWH3HPnDws5jgdUi8Qo6AME9AcUVtjWa8p2zOMBl4d
-qnx5O0sBhi2QWxpjexQxTsq5hh8mipi0OV0PqA+sSOBhTPGabPDKWTqzyM7BDm/rsWMMmRTrVuL1
-9U+x+oCJu4kQU7WOUsGpy1CMkQFFKw6YzdszqqSHaQlmNRPqkrI9Mul8AhfjGn85BcUFicsyw6i4
-gJRv4F3J9mnlBdVSWFnKISxJ7ZfT0i4dGpp9moVPuGzg5cLgdZ6S5RCMMJ1QLsKHz3ZcaFoF/t8t
-2ACpN8n0Evy8y3NgP+NkwdnftSWnNg8qYSt2bt/eXtpn/FDvZat8bohM9Q+nlD/jDAQAAA=="
+config="H4sICGr2KGICAy52aWRlb3dhbGwAVVNNTyMxDL33V1jtoVOpO7MIlgPSHFaq2AuL0IK4p4mnE8gk
+UT5a+u/XTtoCl8k4tp+fn50FPOZpiwHcAMEdIjRwBT/g6hZWswVf9Dez2QI2OnojjjA5hXfgofEu
+pCB0Wq3h6dOCQRuM4Kw5rsAFeIDGCKuiFB6/+lp4uFzrCGlEUDiIbFKp0M4WfPSeS/8JWoF0xuUA
+lAQHrdII2oLXH2gixe4oop9vTUa4vp1zzqtW6IAZU2fNCfoOJr+n0s/ZM18YiCDdrGFvZCfps4Zh
+4ByCrKl9t9W2q5cM+1d86ClPYC+SlZ6YrvjYa3US6/G7G5KD+K49hfHR/yyC5iCSdhaaiNKRFkRs
+c5JAl5Sit7ZEXlud0DAtdcrqfzHGiwg7pD6CmBDIgdAImbIw1VDokYBJcZA+r2HnM2CSK8IZfOyv
+C49/GFPQsk4O0tGXdsrZz9/8jhS6KZI+o8FzGCsnstIOmsT2WY8AXqTxeyfW1VBCLWd/VctKFxS4
+nHxO3C2vQPQo9aBR1SqW2mrhyaCIZ9+R6RAS5fVdmny350EfhDEtORj4njPliPK9hd85uYn0kuQ/
+QiSpDiPasmG0mcT2iQnmiIqWwrgDtRCToM3IPKsC0qeQsbQ/5mFghU4Dj9X+9KMIcizK1KEHlDlE
+va+Du1iXhPOLEgSZCJimhIIQuEALr4K3WQoLW4QlK7FkwsskdsvyCpYGh1TvJNoUcNnW3jmW3ogx
+nMm9gR5Y3YCnadRyBMRz5v9+TgYwXhn0vbP1bdRAVXny0pCj73IMXRxFwI7t2L283HcbfBOv+VnY
+2KY0zP4D3IKnYlQEAAA="
 
-if [[ ! -f /tmp/.videowall ]]; then
-	base64 -d <<< "$config" | gzip -d > /tmp/.videowall && echo config file created && exit
+if [[ ! -f $HOME/.videowall ]]; then
+	base64 -d <<< "$config" | gzip -d > $HOME/.videowall && echo config file created
 else
-	. ~/.videowall
+	. $HOME/.videowall
 fi
 font="${font:-/usr/share/fonts/TTF/Inconsolata-SemiBold.ttf}"
 fontcolour="${fontcolour:-white}"
-[[ -n $timeout ]] && timeout=(-t $timeout)
 
 case $player in
-	*cvlc) player=("$player" -q -f --key-quit 'q' --no-osd - --run-time=$timeout "vlc://quit")
+	*cvlc) player=("$player" -q -f --key-quit 'q' --no-osd - --run-time=$duration "vlc://quit")
 		;;
-	*vlc) player=("$player" -q -f --key-quit 'q' --no-osd - --run-time=$timeout "vlc://quit")
+	*vlc) player=("$player" -q -f --key-quit 'q' --no-osd - --run-time=$duration "vlc://quit")
 		;;
 	*ffplay) player=("$player" -hide_banner -loglevel panic -autoexit -fs -)
 		;;
@@ -109,9 +105,9 @@ case $player in
 esac
 
 
-## parameters ##
+## process options ##
 
-while getopts :drshSn:m:f:F:o:g:R:t:T: opts; do
+while getopts :DrchSn:a:m:M:f:F:o:s:g:t:d: opts; do
    case "$opts" in
    h)	printf "$help"
 		exit 0
@@ -120,9 +116,11 @@ while getopts :drshSn:m:f:F:o:g:R:t:T: opts; do
 		[[ ! $rows =~ $exp ]] && echo please specify a number from 1 to 16 for -n && exit
 		(( rows > 16 )) && rows=16
 		;;
-	m) mode=$OPTARG
+	M) mode=$OPTARG
 		;;
-	o) offset=$OPTARG
+	m) maxvids=$OPTARG
+		;;
+	s) skip=$OPTARG
 		;;
 	F) fps=$OPTARG
 		;;
@@ -130,10 +128,12 @@ while getopts :drshSn:m:f:F:o:g:R:t:T: opts; do
 		;;
 	g) grid="${OPTARG}"
 		;;
-	R) out="${OPTARG}"
-		[[ ${out##*.} != mp4 ]] && echo please make extension mp4 && exit
+	o) out="${OPTARG}"
+		[[ ${out##*.} != mp4 ]] && echo please specify mp4 && exit
 		;;
-	s) skipcheck=true
+	a) audio="${OPTARG}"
+		;;
+	c) check=true
 		;;
 	S) shuffle=true
 		;;
@@ -141,8 +141,9 @@ while getopts :drshSn:m:f:F:o:g:R:t:T: opts; do
 		;;
 	t) title="${OPTARG}"
 		;;
-	d) demo=(https://www.w3schools.com/html/mov_bbb.mp4)
-		skipcheck=true
+	d) duration=${OPTARG}
+		;;
+	D) demo=(https://www.w3schools.com/html/mov_bbb.mp4)
 		rows=3
 		grid="#ff4400 5"
 		;;
@@ -173,25 +174,16 @@ done
 case "$mode" in
 	p)	factor=2
 	;;
-	P)	[[ -n $skipcheck ]] && echo File filtering is disabled
+	P)	check=true
 		factor=2
 	;;
-	L)	[[ -n $skipcheck ]] && echo File filtering is disabled
+	L)	check=true
 	;;
 esac
 
 
-## directory recurse function ##
+## graphics capabilities ##
 
-# possible implementation: limit depth of recursion
-function recurse() {
-	for i in "$1"/*; do
-		[[ -d "$i" ]] && recurse "$i" || { [[ -f "$i" ]] && vids+=("$i"); }
-	done
-}
-
-default=$(echo $@ | sed -r 's/-[a-z]* ?|-F [a-z]* ?|-[a-z] [a-z]* ?//g')
-[[ ${default: -1} == ' ' ]] && { echo "Please put options first"; exit; } #default=${default::-1}; }
 cards=$(lspci | grep VGA)
 nvidia=$(grep NVIDIA <<< "$cards")
 intel=$(grep Intel <<< "$cards")
@@ -199,8 +191,21 @@ intel=$(grep Intel <<< "$cards")
 dims=$(xdpyinfo &>/dev/null | grep dimensions | awk '{print $2;}')
 [[ -n $dims ]] && readarray -tdx wh <<< $dims
 bw=${wh[0]:-1920}; bh=${wh[1]:-1080}
-factor=${factor:-1}
+
+
+## initialise values ##
+
+[[ -n $duration ]] && duration=(-t $duration)
+
+fps=${fps:-30}
+
+[[ -z $types ]] && types=(mp4 mkv mov ts webm avi wmv jpg jpeg png gif)
+
+skip=${skip:-0}
+
 num=0
+
+factor=${factor:-1}
 
 if [[ $factor == 2 ]]; then
 	[[ $rows == 16 ]] && rows=15
@@ -209,23 +214,12 @@ else
 	maxsides=${rows:-4}
 fi
 max=$(($maxsides*$maxsides*$factor))
-
-input=$default
-[[ -z $types ]] && types=(mp4 mkv mov ts webm avi wmv jpg jpeg png gif)
-
-fps=${fps:-30}
-
-offset=${offset:-0}
-
-[[ -z $input ]] &&
-{ { [[ -n $demo ]] && vids=("$demo"); } || { [[ -n $recursive ]] && recurse $PWD || vids=(*); }; } ||
-{ [[ -d $input ]] && { [[ -n $recursive ]] && recurse $input || vids=("$input"/*); } ||
-vids=("$@"); }
+[[ -z $maxvids ]] || ((maxvids > max)) && maxvids=$max
 
 if [[ -n $title ]]; then
 	title=($title)
 	[[ ${#title[@]} != 2 ]] && echo "Please specify name/tag and left/centre for title" && exit
-	if [[ ${title[0]} != name && ${title[0]} != tag ]]; then #&& echo "Please specify 'name' or 'tag'" && exit
+	if [[ ${title[0]} != name && ${title[0]} != tag ]]; then
 		tmparr=(${title[1]} ${title[0]})
 		title=(${tmparr[@]})
 		if [[ ${title[0]} != name && ${title[0]} != tag ]]; then
@@ -236,13 +230,29 @@ if [[ -n $title ]]; then
 	fi
 fi
 
+
+## build file list ##
+
+input=$(echo $@ | sed -r 's/-[a-z]* ?|-F [a-z]* ?|-[a-z] [a-z]* ?//g')
+[[ ${input: -1} == ' ' ]] && { echo "Please put options first"; exit; } #default=${default::-1}; }
+
+function recurse() {
+	for i in "$1"/*; do
+		[[ -d "$i" ]] && recurse "$i" || { [[ -f "$i" ]] && vids+=("$i"); }
+	done
+}
+
+[[ -z $input ]] &&
+{ { [[ -n $demo ]] && vids=("$demo"); } || { [[ -n $recursive ]] && recurse $PWD || vids=(*); }; } ||
+{ [[ -d $input ]] && { [[ -n $recursive ]] && recurse $input || vids=("$input"/*); } || vids=("$@"); }
+
 for file in "${vids[@]}"; do
-	if [[ $(( $num - $offset )) == $max ]]; then
+	if [[ $(( $num - $skip )) == $maxvids ]]; then
 		break
 	else
 		ext="${file##*.}"
 		if [[ -f "$file" && " ${types[@]} " =~ " $ext " || " ${types[@]} " =~ " ${ext,,} " || "${file:0:4}" == http ]]; then
-			if [[ -z $skipcheck ]]; then
+			if [[ -n $check ]]; then
 				checkfile=($(ffprobe -hide_banner -v panic -select_streams v:0 -show_entries "stream=codec_type,width,height:format_tags=title" \
 -of default=noprint_wrappers=1 -i "$file"))
 				[[ ${checkfile[0]##*=} != video ]] && continue
@@ -254,7 +264,7 @@ for file in "${vids[@]}"; do
 				thistitle="${thistitle##*=}"
 			fi
 			((num++))
-			(( $num <= $offset )) && continue
+			(( $num <= $skip )) && continue
 			if [[ -n $title ]]; then
 				if [[ ${title[1]} == tag && -n $thistitle ]]; then
 					t="${thistitle//\'/’}"
@@ -276,7 +286,7 @@ done
 
 [[ -z $files ]] && echo No files found && exit
 
-(( num-=$offset ))
+(( num-=$skip ))
 
 if [[ $((max-num)) > 0 ]]; then
 	f=0
@@ -292,11 +302,13 @@ fi
 
 if [[ -n $shuffle ]]; then
 	while read numtitles; do
+		sfiles+=("${files[$numtitles]}")
 		stitles+=("${titles[$numtitles]}")
 		sinputs+=(-stream_loop -1 -i "${files[$numtitles]}")
 	done < <(
 		seq 0 $((${#titles[@]}-1)) | shuf
 	)
+	files=("${sfiles[@]}")
 	titles=("${stitles[@]}")
 	inputs=("${sinputs[@]}")
 fi
@@ -365,14 +377,24 @@ done
 
 ## ffmpeg codec parameters ##
 
+if [[ -n $audio ]]; then
+	[[ $audio =~ $exp ]] &&
+		{ (( $audio > $num )) && { echo audio index out of range; exit; }; anum=$((--audio)); audio="${files[$anum]}"; }
+	ainput=(-stream_loop -1 -i "$audio")
+	aoutput=(-map "$num:a")
+else
+	aoutput=-an
+fi
+
 [[ -n $nvidia ]] && opts=(-c:v h264_nvenc -r $fps \
    -b:v 3M -maxrate:v 5M -bufsize:v 8M -profile:v main -preset:v p1 -tune:v ull \
-   -level:v 4.2 -rc:v vbr -bf:v 3 -coder:v cabac -an) || opts=(-c:v libx264 -r $fps -crf 0 -preset ultrafast -an)
+   -level:v 4.2 -rc:v vbr -bf:v 3 -coder:v cabac ${aoutput[@]}) || opts=(-c:v libx264 -r $fps -crf 18 -preset slow ${aoutput[@]})
+#opts=(-c:v libx265 -r $fps -x265-params lossless=1 ${aoutput[@]})
 
 
-## assemble ffmpeg command ##
+## build ffmpeg command ##
 
-cmd=(ffmpeg -hide_banner -loglevel panic "${inputs[@]}" -filter_complex "$fc" ${timeout[@]} ${opts[@]})
+cmd=(ffmpeg -hide_banner -loglevel panic "${inputs[@]}" -filter_complex "$fc" "${ainput[@]}" ${duration[@]} ${opts[@]})
 
 
 ## record or display ##
