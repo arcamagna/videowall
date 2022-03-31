@@ -15,7 +15,7 @@ videowall [options] [files..]
 	-M <letter>
 	   Display mode for tiles. Landscape mode is used by default.
 	   L  Use landscape files only.
-		p  Portrait mode.
+	   p  Portrait mode.
 	   P  Use portrait files only.
 	
 	-s <number>
