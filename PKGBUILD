@@ -10,7 +10,7 @@ license=('GPL3')
 makedepends=('git')
 provides=(_pkgname)
 conflicts=(_pkgname)
-source=("$pkgname::git+https://github.com/arcamagna/videowall.git")
+source=("git+https://github.com/arcamagna/videowall.git")
 md5sums=('SKIP')
 pkgver() {
   cd "${_pkgname}"
