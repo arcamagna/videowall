@@ -2,8 +2,8 @@
 
 ## colours ##
 
-GREEN=$'\e[01;32m'
-CYAN=$'\e[01;36m'
+GREEN=$'\e[32m'
+CYAN=$'\e[36m'
 RESET=$'\e[0m'
 
 
@@ -16,9 +16,9 @@ Works with both videos and images.$RESET
 ${CYAN}Usage:$RESET videowall [options] [files..]\n\
 \n\
 ${CYAN}Options:\n\
- $CYAN-n$RESET  <int> Number of rows (max 16). Default 4 (16 tiles) or 3 in portrait mode (18 tiles).\n\
- $CYAN-m$RESET  <int> Maximum number of files. This determines the sequence length before repeating.\n\
- $CYAN-M$RESET  <L|p|P> Display mode for tiles. Landscape mode is used by default.\n\
+ $CYAN-n$RESET  <int> Number of rows (max 16). Default is 4, or 3 in portrait mode.\n\
+ $CYAN-m$RESET  <int> Maximum number of files. This determines the tile sequence before repeating.\n\
+ $CYAN-M$RESET  <str> Display mode for tiles. Landscape mode is used by default.\n\
  	L  Use landscape files only.\n\
  	p  Portrait mode.\n\
  	P  Use portrait files only.\n\
@@ -26,13 +26,15 @@ ${CYAN}Options:\n\
  $CYAN-c$RESET    File check (slower start up).\n\
  $CYAN-F$RESET  <int> Target frame rate. Default 30fps.\n\
  $CYAN-r$RESET    Find files recursively.\n\
- $CYAN-f$RESET  <extension> Filter filetype(s) e.g. \"mp4 jpg\".\n\
- $CYAN-t$RESET  <name|tag centre|left> Title type and position. Default no titles.\n\
+ $CYAN-f$RESET  <str> Filter filetype(s) e.g. \"mp4 jpg\".\n\
+ $CYAN-t$RESET  <str> Title type (name or tag) and position (centre or left) e.g. \"tag centre\". Default is no titles.\n\
  $CYAN-d$RESET  <int> Duration in seconds.\n\
  $CYAN-S$RESET    Shuffle file order.
- $CYAN-g$RESET  <\"colour thickness\"> Grid or bezel colour and thickness e.g. \"black 3\". Default is no grid.\n\
- $CYAN-a$RESET  <input_file> File name or tile number for audio source.\n\
- $CYAN-o$RESET  <output_file.mp4> Specify a file name to record output.\n\
+ $CYAN-g$RESET  <str> Grid or bezel colour and thickness e.g. \"black 3\". Default is no grid.\n\
+ $CYAN-a$RESET  <str|int> File name or tile number for audio source. Default is no audio.\n\
+ $CYAN-o$RESET  <str> Specify a path and file name to record output.\n\
+ $CYAN-l$RESET    Use with output file to specify lossless H.264 encoding.\n\
+ $CYAN-p$RESET    Use with output file to specify Apple ProRes encoding.\n\
  $CYAN-D$RESET    demo\n\
 \n\
 ${CYAN}Files:$RESET\n\
@@ -41,22 +43,23 @@ Directory name or list of videos/images. If omitted current directory is used.\n
 \n\
 ${CYAN}Operation:$RESET\n\
 \n\
-If there aren't enough files available or -M restricts the number of files then they will be repeated to fill the given area.\n\
+If there aren't enough files available or the number of files is limited with -m then they will be repeated to fill the given area.\n\
 Performance can be very slow for larger values of n especially when mode is L or P or tag is used for title.\n\
+Lossless or ProRes encoding can produce very large files. These have very little or no compression and are best used with a set duration.\n\
 \n\
 Press q to quit\n\
 \n\
 ${CYAN}Examples:$RESET\n\
 \n\
-videowall\n\
+${GREEN}videowall$RESET\n\
 \n\
 4x4 grid of videos and/or images from the current directory. Sequence will be repeated if there aren't 16 unique valid files.\n\
 \n\
-videowall -Mp -Sn2 -g\"#054da5 4\" -t \"tag centre\"\n\
+${GREEN}videowall -Mp -Sn2 -g\"#054da5 4\" -t \"tag centre\"$RESET\n\
 \n\
-8x2 random grid of videos each having a 4 px blue frame and title tag bottom centre if one exists.\n\
+2x4 random grid of videos each having a 4 px blue frame and title tag bottom centre if one exists.\n\
 \n\
-videowall -rs -n6 -f \"mp4 mkv\" -s 50 -o \"/tmp/6x6 video wall.mp4\" ~\n\
+${GREEN}videowall -n6 -f \"mp4 mkv\" -rs 50 -o \"/tmp/6x6 video wall.mp4\" ~$RESET\n\
 \n\
 6x6 grid by recursively searching for mp4 and mkv files in user directory. The first 50 files will be skipped. Files will not be checked for valid video streams. Output will be recorded to \"/tmp/6x6 video wall.mp4\" instead of displaying on screen.\n\
 \n"
@@ -70,31 +73,47 @@ word='^[a-z]|#([A-Fa-f0-9]{6})+$'
 
 ## config file ##
 
-config="H4sICGr2KGICAy52aWRlb3dhbGwAVVNNTyMxDL33V1jtoVOpO7MIlgPSHFaq2AuL0IK4p4mnE8gk
-UT5a+u/XTtoCl8k4tp+fn50FPOZpiwHcAMEdIjRwBT/g6hZWswVf9Dez2QI2OnojjjA5hXfgofEu
-pCB0Wq3h6dOCQRuM4Kw5rsAFeIDGCKuiFB6/+lp4uFzrCGlEUDiIbFKp0M4WfPSeS/8JWoF0xuUA
-lAQHrdII2oLXH2gixe4oop9vTUa4vp1zzqtW6IAZU2fNCfoOJr+n0s/ZM18YiCDdrGFvZCfps4Zh
-4ByCrKl9t9W2q5cM+1d86ClPYC+SlZ6YrvjYa3US6/G7G5KD+K49hfHR/yyC5iCSdhaaiNKRFkRs
-c5JAl5Sit7ZEXlud0DAtdcrqfzHGiwg7pD6CmBDIgdAImbIw1VDokYBJcZA+r2HnM2CSK8IZfOyv
-C49/GFPQsk4O0tGXdsrZz9/8jhS6KZI+o8FzGCsnstIOmsT2WY8AXqTxeyfW1VBCLWd/VctKFxS4
-nHxO3C2vQPQo9aBR1SqW2mrhyaCIZ9+R6RAS5fVdmny350EfhDEtORj4njPliPK9hd85uYn0kuQ/
-QiSpDiPasmG0mcT2iQnmiIqWwrgDtRCToM3IPKsC0qeQsbQ/5mFghU4Dj9X+9KMIcizK1KEHlDlE
-va+Du1iXhPOLEgSZCJimhIIQuEALr4K3WQoLW4QlK7FkwsskdsvyCpYGh1TvJNoUcNnW3jmW3ogx
-nMm9gR5Y3YCnadRyBMRz5v9+TgYwXhn0vbP1bdRAVXny0pCj73IMXRxFwI7t2L283HcbfBOv+VnY
-2KY0zP4D3IKnYlQEAAA="
+config="H4sICJWERWICA3ZpZGVvd2FsbHJjAIVVS08jORC+8ytKcEiQSMIjg0ZIfRgtYufAILSwXJHTXZ14
+cLc9fnRgf/18ZXd4jGZ3L+mUXfXV66vyAd2kbsWebEvebgNN6YRmdHJOh3sHclAt9/YO6FIHZ9QL
+dbbhC3I0ddZHr3Q8PKLbN4labTiQ7c3LIVlP1zQ1qm9CrRy/v5vT9euxDhQ3TA23KpmYPcz3DuRT
+OXH9p9cN1dbY5AlGtNVN3JDuyelnNgG6a2hU+yuTmM7O98XmQTdsSSJGZtMR+oI6N8D1XXISL7UI
+ECdHNJh6UePniNpWbABZTKvFSveLciiw39Sz7lJH/WvJck4SrnoedDMW6+bjNUVL4Uk7qMmnOs4F
+TV5FbXuaBq4taoHALscS6GyS6617BK97HdlIWM1oVX0SjHvl14w8vOqYcME0VXVMyhShYccARsWp
+dumI1i4Rx/oQOK0L1VmO4y8O0eu6dI7ii8vp5G+1/92tUaFlLukdG96pSeVUarSlaRR5Vw9PTqE3
+CN6ipT4rf8yrt8UQPvK3OilB1NY3ZFN0KYq5GM7p1oagV6Ywh/g5ch+QfCDlWeI6ou5pEK+dHQAI
+82oRO7cYpPtbZcwcSoJ/Jfb1huunOX1J0XYoYo37Fwqo33bDfaYd6AqwW4kzBW7AFGO3SCNEBbok
+RytEt2HjEMFgMyu9Ty5yMzZa6BksmlHSZ++tl3Jm11X0iXMlN6ltpdgjd0KR3+5Z+XqTi1xgPdfJ
+Bz0UDrxKrwa74VSAjABGw1kBIeYqPigZjFr1tGKa9ODKRNKcRLWe5IgnhttYzmruo+fJvFRMdDFu
+xoilVIR0K7PqeWxlcQcgoYz8r/YhkOBlzlzZvoxZUWxKnMI/XFSLFPwibNDMhchhcX9/tbjk7+oh
+3ak+zGNsM8t3TjKSz1ThHVneyDV52HV9MgYDk0oA/rBdh7z+H0ILs9YpKxsdonSu2O6gLmWu/g0H
+44nrnerVVed4TdzXttH9GpMhYxpZCIHrr8o3W+Hx1/np+bKosZ/T32OZ4RizlNl/g8y0yuOLCFub
+elDzxsbSkrdI4AUxbAD32A8ArPZn9cVAbwc0W0E++0YzrCtZEZA+QVqlNuh/RPoMyXkrtIPUKWxZ
+yIwpgejwMMTUy00CJ2aGwUgIy/kpzby4GlYeaK04oVlOCH9rtVJ1WSG2jb/Jee/A6NUzTsaARwkI
+vqXTs10EcIo3plWhcOuLczLUb2W69RbL7B0qEoHh41MYcV/l9znCzY/yQYUa2WvOHCMJHcOjY//Y
+rejz8TFO8No8tl2klzSo5XLpTo4N50CusaUwpQGT/9/pPZpR89c8f80PITk6LlnmLbsjkWxNAS2t
+VcjevWS1W6+F4HhGf8s3rBi7zQfhdWlcWxlUdJCmP5LmiMdPRTwddtxb8kwYu84qVdb46MgO7GXp
+oI4xZyk+ilB8/ATXV/UTWggAAA=="
 
-if [[ ! -f $HOME/.videowall ]]; then
-	base64 -d <<< "$config" | gzip -d > $HOME/.videowall && echo config file created
+if [[ -d $HOME/.config ]]; then
+		VIDDIR=$HOME/.config/videowall
+		RCNAME=videowallrc
+	[[ ! -d $VIDDIR ]] && mkdir $VIDDIR
 else
-	. $HOME/.videowall
+	VIDDIR=$HOME
+	RCNAME=.videowallrc
 fi
+
+if [[ ! -f $VIDDIR/$RCNAME ]]; then
+	base64 -d <<< "$config" | gzip -d > $VIDDIR/$RCNAME && echo "$VIDDIR/$RCNAME created"
+else
+	. $VIDDIR/$RCNAME
+fi
+
 font="${font:-/usr/share/fonts/TTF/Inconsolata-SemiBold.ttf}"
 fontcolour="${fontcolour:-white}"
 
 case $player in
-	*cvlc) player=("$player" -q -f --key-quit 'q' --no-osd - --run-time=$duration "vlc://quit")
-		;;
-	*vlc) player=("$player" -q -f --key-quit 'q' --no-osd - --run-time=$duration "vlc://quit")
+	*vlc | *cvlc) player=("$player" -q -f --key-quit 'q' --no-osd - --run-time=$duration "vlc://quit")
 		;;
 	*ffplay) player=("$player" -hide_banner -loglevel panic -autoexit -fs -)
 		;;
@@ -105,15 +124,17 @@ case $player in
 esac
 
 
-## process options ##
+## process input options ##
 
-while getopts :DrchSn:a:m:M:f:F:o:s:g:t:d: opts; do
+args=$@
+
+while getopts :cDhlprSa:d:f:F:g:m:M:n:o:s:t: opts; do
    case "$opts" in
-   h)	printf "$help"
+	h)	printf "$help"
 		exit 0
-      ;;
+		;;
 	n) rows=$OPTARG
-		[[ ! $rows =~ $exp ]] && echo please specify a number from 1 to 16 for -n && exit
+		[[ ! $rows =~ $exp ]] && echo Please specify a number from 1 to 16 for -n && exit
 		(( rows > 16 )) && rows=16
 		;;
 	M) mode=$OPTARG
@@ -129,7 +150,12 @@ while getopts :DrchSn:a:m:M:f:F:o:s:g:t:d: opts; do
 	g) grid="${OPTARG}"
 		;;
 	o) out="${OPTARG}"
-		[[ ${out##*.} != mp4 ]] && echo please specify mp4 && exit
+		;;
+	p) prores=true
+		warning="Prores"
+		;;
+	l) lossless=true
+		warning="Lossless H.264"
 		;;
 	a) audio="${OPTARG}"
 		;;
@@ -161,25 +187,32 @@ shift $((OPTIND - 1))
 
 ## check for required applications ##
 
-function required {
-	hash $1 2>/dev/null || echo "Please install $1\n"
-}
-needed=(ffmpeg ffprobe xdpyinfo)
-choose=(mpv vlc cvlc ffplay)
-for app in ${needed[@]}; do
-	alert+=$(required $app)
+for app in ffmpeg ffprobe xdpyinfo lspci; do
+	apps+=$(hash $app 2>/dev/null || echo " $app\n")
 done
-[[ -n $alert ]] && { printf "$alert"; exit 1; }
+[[ -n $apps ]] && printf "Please install:\n$apps" && exit 1
+for vapp in mpv vlc cvlc ffplay mplayer; do
+	playerslist+=$(hash $vapp 2>/dev/null && echo "$vapp")
+done
+[[ -z $out && -z $playerslist ]] && printf "Please install a supported video player:\nmpv, vlc (cvlc), ffplay, or mplayer\n" && exit 1
+
+
+## set mode parameters ##
 
 case "$mode" in
-	p)	factor=2
-	;;
-	P)	check=true
-		factor=2
-	;;
-	L)	check=true
-	;;
+	p)	factor=2 ;;
+	P)	check=true; factor=2 ;;
+	L)	check=true ;;
 esac
+
+
+## lossless/prores warning ##
+
+[[ -n $lossless || -n $prores ]] &&
+	{ echo "$warning mode can produce very large files.";
+	{ [[ -z $out ]] && echo "You must specify an output file." && exit; };
+	{ [[ -z $duration ]] && echo "You may want to specify a duration"; };
+	echo "Continue y/n?"; read -sn 1 cont;  echo -e '\e[1A\e[K'; [[ $cont == n ]] && exit ; }
 
 
 ## graphics capabilities ##
@@ -234,7 +267,7 @@ fi
 ## build file list ##
 
 input=$(echo $@ | sed -r 's/-[a-z]* ?|-F [a-z]* ?|-[a-z] [a-z]* ?//g')
-[[ ${input: -1} == ' ' ]] && { echo "Please put options first"; exit; } #default=${default::-1}; }
+[[ ${input: -1} == ' ' ]] && { echo "Please put options first"; exit; }
 
 function recurse() {
 	for i in "$1"/*; do
@@ -247,7 +280,7 @@ function recurse() {
 { [[ -d $input ]] && { [[ -n $recursive ]] && recurse $input || vids=("$input"/*); } || vids=("$@"); }
 
 for file in "${vids[@]}"; do
-	if [[ $(( $num - $skip )) == $maxvids ]]; then
+	if [[ $(( num - skip )) == $maxvids ]]; then
 		break
 	else
 		ext="${file##*.}"
@@ -316,20 +349,20 @@ fi
 (( $num < 1 )) || [[ -z $num ]] && { echo No valid files; exit; }
 
 numf=$(( (num+factor-1)/factor ))
-for (( i=0; i<=$maxsides; i++ )); do
+for (( i=0; i<=maxsides; i++ )); do
 	n=$((i*i))
 	m=$(((i+1)*(i+1)))
-	(( $numf == $n )) && { max=$n; break; }
-	(( $numf > $n && $numf < $m )) && { max=$m; break; }
+	(( numf == n )) && { max=$n; break; }
+	(( numf > n && numf < m )) && { max=$m; break; }
 done
 
 sides=$(echo "sqrt($max)" | bc)
 w0=0; w1=$((bw/sides/$factor))
 h0=0; h1=$((bh/sides))
 for (( i=2; i<=$((maxsides*factor)); i++ )); do
-	width=w$i; wval=$((w1*$i))
+	width=w$i; wval=$((w1*i))
 	eval "${width}=\${wval}";
-	height=h$i; hval=$((h1*$i))
+	height=h$i; hval=$((h1*i))
 	eval "${height}=\${hval}";
 done
 
@@ -346,7 +379,7 @@ done
 
 if [[ -n $grid ]]; then
 	grid=($grid)
-	[[ ! ${grid[0]} =~ $word && ! ${grid[1]} =~ $word ]] || [[ ! ${grid[0]} =~ $exp && ! ${grid[1]} =~ $exp ]] && echo "grid requires colour (name or full hex value) and integer" && exit
+	[[ ! ${grid[0]} =~ $word && ! ${grid[1]} =~ $word ]] || [[ ! ${grid[0]} =~ $exp && ! ${grid[1]} =~ $exp ]] && echo "Grid requires colour (name or full hex value) and integer" && exit
 	[[ ${grid[0]} =~ $exp || ${grid[1]} =~ $word ]] && { tmparr=(${grid[1]} ${grid[0]}); grid=(${tmparr[@]}); }
 	pos=$((${grid[1]}+4))
 	grid=",drawbox=0:0:0:0:${grid[0]}:t=${grid[1]}"
@@ -378,27 +411,56 @@ done
 ## ffmpeg codec parameters ##
 
 if [[ -n $audio ]]; then
-	[[ $audio =~ $exp ]] &&
-		{ (( $audio > $num )) && { echo audio index out of range; exit; }; anum=$((--audio)); audio="${files[$anum]}"; }
-	ainput=(-stream_loop -1 -i "$audio")
-	aoutput=(-map "$num:a")
+	if [[ $audio =~ $exp ]]; then
+		(( audio > num )) || [[ $audio == 0 ]] && { echo Audio index out of range; exit; }
+		anum=$((--audio))
+	else
+		anum=$num
+		ainput=(-stream_loop -1 -i "$audio")
+	fi
+	aoutput=(-map "$anum:a?")
 else
 	aoutput=-an
 fi
 
-[[ -n $nvidia ]] && opts=(-c:v h264_nvenc -r $fps \
-   -b:v 3M -maxrate:v 5M -bufsize:v 8M -profile:v main -preset:v p1 -tune:v ull \
-   -level:v 4.2 -rc:v vbr -bf:v 3 -coder:v cabac ${aoutput[@]}) || opts=(-c:v libx264 -r $fps -crf 18 -preset slow ${aoutput[@]})
-#opts=(-c:v libx265 -r $fps -x265-params lossless=1 ${aoutput[@]})
+titletag=${titletag:-'Videowall'}
+commenttag=${commenttag:-$args}
+datetag=${datetag:-$(date +%c)}
+
+h264_nvenc="${h264_nvenc:--c:v h264_nvenc -b:v 3M -maxrate:v 5M -bufsize:v 8M -profile:v main -preset:v p1 -tune:v ull -level:v 4.2 -rc:v vbr -bf:v 3 -coder:v cabac}"
+libx264="${libx264:--c:v libx264 -crf 23 -preset ultrafast}"
+prores_ks="${prores_ks:--c:v prores_ks -profile:v 4 -q:v 4 -vendor apl0 -bits_per_mb 8000 -pix_fmt yuva444p10le}"
+libx264_lossless="${libx264_lossless:--c:v libx264 -preset ultrafast -qp 0}"
+acodec="${acodec:--c:a aac}"
+
+loglevel=${loglevel:-panic}
+
+ctype=mp4
+if [[ -z $out ]]; then
+	[[ -n $nvidia ]] && opts=(-r $fps \
+   "$h264_nvenc" $acodec ${aoutput[@]}) || opts=(-r $fps "$libx264" -c:a $acodec ${aoutput[@]})
+elif [[ -n $prores ]]; then
+	ctype=mov
+	opts=(-r $fps "$prores_ks" -c:a pcm_s16le ${aoutput[@]})
+elif [[ -n $lossless ]]; then
+	opts=(-r $fps "$libx264_lossless" $acodec ${aoutput[@]})
+else
+	opts=(-r $fps "$libx264" $acodec ${aoutput[@]})
+fi
+
+[[ -n $showparams ]] && echo ${opts[@]}
+[[ -n $showfilter ]] && echo "-filter_complex $fc"
+
+tags=(-fflags +bitexact -flags:a +bitexact -map_metadata -1 -metadata "TITLE=$titletag" -metadata "DATE=$datetag" -metadata "COMMENT=$commenttag")
 
 
 ## build ffmpeg command ##
 
-cmd=(ffmpeg -hide_banner -loglevel panic "${inputs[@]}" -filter_complex "$fc" "${ainput[@]}" ${duration[@]} ${opts[@]})
+cmd=(ffmpeg -hide_banner -loglevel $loglevel -y "${inputs[@]}" -filter_complex "$fc" "${ainput[@]}" ${duration[@]} "${tags[@]}" ${opts[@]})
 
 
 ## record or display ##
 
-[[ -n $out ]] && "${cmd[@]}" -f mp4 "$out" || "${cmd[@]}" -f matroska pipe: | "${player[@]}" 2>/dev/null
+[[ -n $out ]] && "${cmd[@]}" -f $ctype "$out" || "${cmd[@]}" -f matroska pipe: | "${player[@]}" 2>/dev/null
 
-[[ $? != 0 ]] && echo bad options or missing video streams
+[[ $? != 0 ]] && echo Options error or missing video streams

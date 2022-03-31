@@ -6,62 +6,70 @@
 videowall [options] [files..]
 ```
 ### Options
-	-n
-	   Number of rows (2 - 16). Default 4 (16 tiles) or 3 (18 tiles) in portrait mode.  
+	-n <number>
+	   Number of rows (max 16). Default is 4, or 3 in portrait mode.  
 	
-	-l
-	   Landscape mode for each video (default).  
+	-m <number>
+	   Maximum number of files. This determines the tile sequence before repeating.  
 	
-	-L
-	   As above but use landscape files only (disabled if -s specified).  
+	-M <letter>
+	   Display mode for tiles. Landscape mode is used by default.
+	   L  Use landscape files only.
+		p  Portrait mode.
+	   P  Use portrait files only.
 	
-	-p
-	   Portrait mode.  
+	-s <number>
+	   Skip number of valid files e.g. -s4 use 5th valid file onwards.
+
+	-c
+	   File check (slower start up).
 	
-	-P
-	   As above but use portrait files only (disabled if -s specified).  
-	
-	-o <number>
-	   Offset to skip valid files e.g. -o4 use 5th file onwards.
-	
-	-s
-	   Skip integrity check (faster start up).  
-	
-	-F
+	-F <number>
 	   Target frame rate. Default 30 fps.  
 	
 	-r
 	   Find files recursively.  
 	
-	-f <extension>
+	-f <string>
 	   Filter filetype(s) e.g. "mp4 jpg".  
 	
-	-t <centre|left>
-	   Position titles (file name) centre or left. Default no titles.  
+	-t <string>
+	   Title type (name or tag) and position (centre or left) e.g. "tag centre". Default is no titles.
 	
-	-T <centre|left>
-	   As above but use title tag if it exists (otherwise use file name).  
+	-d <number>
+	   Duration in seconds.
 	
 	-S
 	   Shuffle file order.
 	
-	-g <"colour thickness">
+	-g <string>
 	   Grid or bezel colour and thickness e.g. "black 3" or "#000000 3". Default is no grid.  
+
+	-a <path|number>
+	   File name or tile number for audio source. Default is no audio.
 	
-	-R <"output_file.mp4">
-	   Specify a file name to record output.  
-	
-	-d
-	   demo  
+	-o <path>
+	   Specify a path and file name to record output.  
+
+	-l
+	   Use with output file to specify lossless H.264 encoding.
+
+	-p
+	   Use with output file to specify Apple ProRes encoding.
+
+	-D
+	   demo	
 
 ### Files
 Directory name or list of videos/images. If omitted current directory is used.
 
 ### Operation
-If there aren't enough files available they will be repeated to fill the given area.  
-Performance can be very slow for larger values of n especially when checking file validity.
+If there aren't enough files available or the number of files is limited with -m then they will be repeated to fill the given area.
+Performance can be very slow for larger values of n especially when mode is L or P or tag is used for title.
+Lossless or ProRes encoding can produce very large files. These have very little or no compression and are best used with a set duration.
+Encoding parameters can be modified in the config file if needed.
 
-Press q to quit  
+Press q to quit
 
 ### Examples
 ```
@@ -71,7 +79,7 @@ Produces a 4x4 grid of videos and/or images from the current directory. Sequence
 ```
 videowall -pSn2 -g"#054da5 4" -T centre
 ```
-Produces a 8x2 random grid of videos each having a 4 px blue frame and title tag bottom centre if one exists.
+Produces a 8x2 random ordered grid of videos each having a 4 px blue frame and title tag bottom centre if one exists.
 ```
 videowall -rs -n6 -f "mp4 mkv" -o 50 -R "/tmp/6x6 video wall.mp4" ~
 ```
