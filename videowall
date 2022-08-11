@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/env bash
 
 ## colours ##
 
@@ -73,26 +73,27 @@ word='^[a-z]|#([A-Fa-f0-9]{6})+$'
 
 ## config file ##
 
-config="H4sICJWERWICA3ZpZGVvd2FsbHJjAIVVS08jORC+8ytKcEiQSMIjg0ZIfRgtYufAILSwXJHTXZ14
-cLc9fnRgf/18ZXd4jGZ3L+mUXfXV66vyAd2kbsWebEvebgNN6YRmdHJOh3sHclAt9/YO6FIHZ9QL
-dbbhC3I0ddZHr3Q8PKLbN4labTiQ7c3LIVlP1zQ1qm9CrRy/v5vT9euxDhQ3TA23KpmYPcz3DuRT
-OXH9p9cN1dbY5AlGtNVN3JDuyelnNgG6a2hU+yuTmM7O98XmQTdsSSJGZtMR+oI6N8D1XXISL7UI
-ECdHNJh6UePniNpWbABZTKvFSveLciiw39Sz7lJH/WvJck4SrnoedDMW6+bjNUVL4Uk7qMmnOs4F
-TV5FbXuaBq4taoHALscS6GyS6617BK97HdlIWM1oVX0SjHvl14w8vOqYcME0VXVMyhShYccARsWp
-dumI1i4Rx/oQOK0L1VmO4y8O0eu6dI7ii8vp5G+1/92tUaFlLukdG96pSeVUarSlaRR5Vw9PTqE3
-CN6ipT4rf8yrt8UQPvK3OilB1NY3ZFN0KYq5GM7p1oagV6Ywh/g5ch+QfCDlWeI6ou5pEK+dHQAI
-82oRO7cYpPtbZcwcSoJ/Jfb1huunOX1J0XYoYo37Fwqo33bDfaYd6AqwW4kzBW7AFGO3SCNEBbok
-RytEt2HjEMFgMyu9Ty5yMzZa6BksmlHSZ++tl3Jm11X0iXMlN6ltpdgjd0KR3+5Z+XqTi1xgPdfJ
-Bz0UDrxKrwa74VSAjABGw1kBIeYqPigZjFr1tGKa9ODKRNKcRLWe5IgnhttYzmruo+fJvFRMdDFu
-xoilVIR0K7PqeWxlcQcgoYz8r/YhkOBlzlzZvoxZUWxKnMI/XFSLFPwibNDMhchhcX9/tbjk7+oh
-3ak+zGNsM8t3TjKSz1ThHVneyDV52HV9MgYDk0oA/rBdh7z+H0ILs9YpKxsdonSu2O6gLmWu/g0H
-44nrnerVVed4TdzXttH9GpMhYxpZCIHrr8o3W+Hx1/np+bKosZ/T32OZ4RizlNl/g8y0yuOLCFub
-elDzxsbSkrdI4AUxbAD32A8ArPZn9cVAbwc0W0E++0YzrCtZEZA+QVqlNuh/RPoMyXkrtIPUKWxZ
-yIwpgejwMMTUy00CJ2aGwUgIy/kpzby4GlYeaK04oVlOCH9rtVJ1WSG2jb/Jee/A6NUzTsaARwkI
-vqXTs10EcIo3plWhcOuLczLUb2W69RbL7B0qEoHh41MYcV/l9znCzY/yQYUa2WvOHCMJHcOjY//Y
-rejz8TFO8No8tl2klzSo5XLpTo4N50CusaUwpQGT/9/pPZpR89c8f80PITk6LlnmLbsjkWxNAS2t
-VcjevWS1W6+F4HhGf8s3rBi7zQfhdWlcWxlUdJCmP5LmiMdPRTwddtxb8kwYu84qVdb46MgO7GXp
-oI4xZyk+ilB8/ATXV/UTWggAAA=="
+config="H4sICBzz9GICA3ZpZGVvd2FsbHJjAIVV224bNxB991cM7AfJgCX5ogSBgX0IargJ4LhGnfrVoHZn
+JcbcJcPLyurX9wy5sp0gbV+0GnLmzO3M8IhuU7diT7Ylb7eBpnRGMzp7T8cHR3JQLQ8OjuhKB2fU
+jjrb8CU5mjrro1c6Hp/Q3atErTYcyPZmd0zW0w1NjeqbUCvHb+/mdPNyrAPFDVPDrUomZg/zgyP5
+VE5c/+51Q7U1NnmCEW11Ezeke3L6mU2A7hoa1eHKJKaL94di86AbtiQRI7PpCH1JnRvg+j45iZda
+BIiTExpMvajxc0JtKzaALKbVYqX7RTkU2D8G9vDFtHaJAhuuo7b9nD63tLOJNmpg6uBJOwMdr9xG
+14Fq5ZuQFTpUcKvDhqKFeUTeOsfvUvW5j2zExxf1rLvUUf/Sllw3KYl6HnQzNuT2x+uM+KQd1ORT
+neamJa8kQJoGri3qjeSvxjLrbJJ7qnsUSPcaAUjqzWhVvROMr8qvEWnrVceEC6apqmNSpggNOwYw
+ukq1Sye5MBzrY+C0LlQXOY4/OUSv68IOijuX08nf6vCbW6MLy9y2+1zSoibdUanRlqZR5H09PDkV
+cwUtaOOz8o959bYYwkf+VmcliNr6hmyKLkUxF8M53dkQ9MoUdhI/R+4Dkg+kPEtcJ9Q9DeK1swMA
+YV4tYucWgzBsq4yZQ0nwr8W+3nD9NKePKdoORaxxv8ud3m64z9TGSADsTuJMgRuw0dgt0ghRgZLJ
+0QrRbdg4RDDYzHzvk4vcjI2WEQgWzSjpg5DWSzmz6yr6xLmSm9S2UuyRO6HIr/esfL3JRS6wnuvk
+gx4KB16kF4P9AlCAjABGw1kBIeYqPigZvlr1tGKa9ODKRNKcRLWe5IgnhttYzmruo+fJvFRMdDET
+xoilVIR0K/vA89jK4g5AQhn5Xx1CIMHLnLm2fRnlotiUOIV/uKgWKfhF2KCZC5HD4uvX68UVf1MP
+6V71YR5jm1m+d5KRfKYK78nySq7Jw77rkzEYmFQC8JvtOuT1/xBamLVOWdnoEKVzxXYPdSVz9W84
+GE9c71WvrzvHa+K+to3u15gMGdPIQghcf8Li2QqPP83P3y+LGvs5/TWWGY4xS5n9t8hMqzy+iLC1
+qQc1b20sLXmNBF4QwwZwj/0AwOpwVl8O9HpAsxXkiy80w7qSFQHpHaRVaoP+W6QPkJy3QjtIncIm
+h8yYEogOj09MvdwkcGJmGIyEsJyf08yLq2HlgdaKE5rlhPC3VitVlxVi2/iLnA+OjF4942QMeJSA
+4Fs6v9hHAKd4x1oVCrc+Olnkb8p05y2W2RtUJALDx6cw4r7Ib3OEm+/lgwo1stecOUUSOoZHx/6x
+W9GH01Oc4EV7bLtIuzSo5XLpzk4N50BusKUwpQGT/9/pPZpR8+c8f84PITk6LVnmLbsnkWxNAS2t
+Vcje7bLanddCcDzVv+QbVozd5oPwsjRurAwqOkjT70lzxAOrIp4OO+4teSaMXWeVKmv86MjivZWl
+gzrGnKX4KELx8Q8McyNSvggAAA=="
 
 if [[ -d $HOME/.config ]]; then
 		VIDDIR=$HOME/.config/videowall
@@ -218,8 +219,11 @@ esac
 ## graphics capabilities ##
 
 cards=$(lspci | grep VGA)
-nvidia=$(grep NVIDIA <<< "$cards")
-intel=$(grep Intel <<< "$cards")
+[[ -n $(grep -i nvidia <<< "$cards") ]] && gpus+=(nvidia)
+[[ -n $(grep -i intel <<< "$cards") ]] && gpus+=(intel)
+gpu=${gpu,,}
+gpu=${gpu:-${gpus[0]}}
+[[ -z $gpu || ! ${gpus[@]} =~ $gpu ]] && echo $gpu gpu not supported && exit 1
 
 dims=$(xdpyinfo &>/dev/null | grep dimensions | awk '{print $2;}')
 [[ -n $dims ]] && readarray -tdx wh <<< $dims
@@ -420,7 +424,8 @@ if [[ -n $audio ]]; then
 	fi
 	aoutput=(-map "$anum:a?")
 else
-	aoutput=-an
+	unset aoutput
+	acodec=-an
 fi
 
 titletag=${titletag:-'Videowall'}
@@ -437,8 +442,8 @@ loglevel=${loglevel:-panic}
 
 ctype=mp4
 if [[ -z $out ]]; then
-	[[ -n $nvidia ]] && opts=(-r $fps \
-   "$h264_nvenc" $acodec ${aoutput[@]}) || opts=(-r $fps "$libx264" -c:a $acodec ${aoutput[@]})
+	[[ $gpu == nvidia ]] && opts=(-r $fps \
+   "$h264_nvenc" $acodec ${aoutput[@]}) || opts=(-r $fps "$libx264" $acodec ${aoutput[@]})
 elif [[ -n $prores ]]; then
 	ctype=mov
 	opts=(-r $fps "$prores_ks" -c:a pcm_s16le ${aoutput[@]})
