@@ -223,7 +223,7 @@ cards=$(lspci | grep VGA)
 [[ -n $(grep -i intel <<< "$cards") ]] && gpus+=(intel)
 gpu=${gpu,,}
 gpu=${gpu:-${gpus[0]}}
-[[ -z $gpu || ! ${gpus[@]} =~ $gpu ]] && echo $gpu gpu not supported && exit 1
+#[[ -z $gpu || ! ${gpus[@]} =~ $gpu ]] && echo $gpu gpu not supported && exit 1
 
 dims=$(xdpyinfo &>/dev/null | grep dimensions | awk '{print $2;}')
 [[ -n $dims ]] && readarray -tdx wh <<< $dims
